@@ -26,6 +26,8 @@ printusage() {
 	echo "    add -v for verbose (debugging purpose)"
 	echo "  $0 -V"
 	echo "    prints version"
+	echo "  $0 -x"
+        echo "    enables debugging (bash set -x)"
 	echo "  $0 -h"
 	echo "    prints help (this message)"
 }
@@ -52,7 +54,7 @@ ENABLE_PERFDATA=0
 VERSION="1.0"
 
 #Process arguments. Add proper options and processing
-while getopts ":c:hvVw:" opt; do
+while getopts ":c:hvVw:x" opt; do
 	case $opt in
 		c)
 			CRITICAL_THRESHOLD=$OPTARG
@@ -72,6 +74,9 @@ while getopts ":c:hvVw:" opt; do
 			;;
 		w)
 			WARNING_THRESHOLD=$OPTARG
+			;;
+		x)
+			set -x
 			;;
 		\?)
 			echo "UNKNOWN: Invalid option: -$OPTARG"
