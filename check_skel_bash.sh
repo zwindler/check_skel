@@ -32,7 +32,7 @@ printusage() {
 
 printvariables() {
 	echo "Variables:"
-	#Add all your variables at the en of the "for" line to display them in verbose
+	#Add all your variables at the end of the "for" line to display them in verbose
 	for i in WARNING_THRESHOLD CRITICAL_THRESHOLD FINAL_STATE FINAL_COMMENT ENABLE_PERFDATA VERSION
 	do
 		echo -n "$i : "
@@ -96,7 +96,7 @@ fi
 #At the end of this, you should 
 # - Put check status in $FINAL_STATE
 # - Put check output in $FINAL_COMMENT
-# - Put numbered the values in $CHECK_VALUE, used for perfdata
+# - Put numbered values in $CHECK_VALUE, used for perfdata
 
 #Perfdata processing, if applicable
 if [[ $ENABLE_PERFDATA -eq 1 ]] ; then
