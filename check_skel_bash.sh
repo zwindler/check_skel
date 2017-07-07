@@ -1,6 +1,6 @@
 #!/bin/bash
 ############################################################################
-#Skeleton of nagios-like plugin using /bin/bash 
+#Skeleton of nagios-like plugin using /bin/bash
 ################################################################################
 #Nagios Constants
 STATE_OK=0
@@ -93,7 +93,7 @@ fi
 
 #Real check goes here. Write your own code according to context
 #####REAL CHECK GOES HERE
-#At the end of this, you should 
+#At the end of this, you should
 # - Put check status in $FINAL_STATE
 # - Put check output in $FINAL_COMMENT
 # - Put numbered values in $CHECK_VALUE, used for perfdata
