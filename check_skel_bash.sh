@@ -7,7 +7,7 @@ STATE_OK=0
 STATE_WARNING=1
 STATE_CRITICAL=2
 STATE_UNKNOWN=3
-SCRIPTPATH=`echo $0 | /bin/sed -e 's,[\\/][^\\/][^\\/]*$,,'`
+SCRIPTPATH=`echo $0 | sed -e 's,[\\/][^\\/][^\\/]*$,,'`
 if [[ -f ${SCRIPTPATH}/utils.sh ]]; then
 	. ${SCRIPTPATH}/utils.sh # use nagios utils to set real STATE_* return values
 fi
