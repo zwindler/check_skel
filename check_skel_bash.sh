@@ -1,4 +1,5 @@
 #!/bin/bash
+set -eu
 ############################################################################
 #Skeleton of nagios-like plugin using /bin/bash
 ################################################################################
@@ -48,6 +49,7 @@ FINAL_STATE=$STATE_UNKNOWN
 FINAL_COMMENT="UNKNOWN: Unplanned exit. You should check that everything is OK"
 
 #Default values (should be changed according to context)
+VERBOSE=0
 WARNING_THRESHOLD=1
 CRITICAL_THRESHOLD=1
 ENABLE_PERFDATA=0
@@ -106,6 +108,8 @@ fi
 #Perfdata processing, if applicable
 if [[ $ENABLE_PERFDATA -eq 1 ]] ; then
 	PERFDATA=" | $CHECK_VALUE;$WARNING_THRESHOLD;$CRITICAL_THRESHOLD;"
+else
+  PERFDATA=""
 fi
 
 #Script end, display verbose information
