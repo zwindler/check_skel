@@ -1,13 +1,14 @@
 #!/bin/bash
+set -eu
 ############################################################################
-#Skeleton of nagios-like plugin using /bin/bash 
+#Skeleton of nagios-like plugin using /bin/bash
 ################################################################################
 #Nagios Constants
 STATE_OK=0
 STATE_WARNING=1
 STATE_CRITICAL=2
 STATE_UNKNOWN=3
-SCRIPTPATH=`echo $0 | /bin/sed -e 's,[\\/][^\\/][^\\/]*$,,'`
+SCRIPTPATH=`echo $0 | sed -e 's,[\\/][^\\/][^\\/]*$,,'`
 if [[ -f ${SCRIPTPATH}/utils.sh ]]; then
 	. ${SCRIPTPATH}/utils.sh # use nagios utils to set real STATE_* return values
 fi
@@ -26,13 +27,15 @@ printusage() {
 	echo "    add -v for verbose (debugging purpose)"
 	echo "  $0 -V"
 	echo "    prints version"
+	echo "  $0 -x"
+        echo "    enables debugging (bash set -x)"
 	echo "  $0 -h"
 	echo "    prints help (this message)"
 }
 
 printvariables() {
 	echo "Variables:"
-	#Add all your variables at the en of the "for" line to display them in verbose
+	#Add all your variables at the end of the "for" line to display them in verbose
 	for i in WARNING_THRESHOLD CRITICAL_THRESHOLD FINAL_STATE FINAL_COMMENT ENABLE_PERFDATA VERSION
 	do
 		echo -n "$i : "
@@ -46,13 +49,14 @@ FINAL_STATE=$STATE_UNKNOWN
 FINAL_COMMENT="UNKNOWN: Unplanned exit. You should check that everything is OK"
 
 #Default values (should be changed according to context)
+VERBOSE=0
 WARNING_THRESHOLD=1
 CRITICAL_THRESHOLD=1
 ENABLE_PERFDATA=0
 VERSION="1.0"
 
 #Process arguments. Add proper options and processing
-while getopts ":c:hvVw:" opt; do
+while getopts ":c:hvVw:x" opt; do
 	case $opt in
 		c)
 			CRITICAL_THRESHOLD=$OPTARG
@@ -72,6 +76,9 @@ while getopts ":c:hvVw:" opt; do
 			;;
 		w)
 			WARNING_THRESHOLD=$OPTARG
+			;;
+		x)
+			set -x
 			;;
 		\?)
 			echo "UNKNOWN: Invalid option: -$OPTARG"
@@ -93,14 +100,16 @@ fi
 
 #Real check goes here. Write your own code according to context
 #####REAL CHECK GOES HERE
-#At the end of this, you should 
+#At the end of this, you should
 # - Put check status in $FINAL_STATE
 # - Put check output in $FINAL_COMMENT
-# - Put numbered the values in $CHECK_VALUE, used for perfdata
+# - Put numbered values in $CHECK_VALUE, used for perfdata
 
 #Perfdata processing, if applicable
 if [[ $ENABLE_PERFDATA -eq 1 ]] ; then
 	PERFDATA=" | $CHECK_VALUE;$WARNING_THRESHOLD;$CRITICAL_THRESHOLD;"
+else
+  PERFDATA=""
 fi
 
 #Script end, display verbose information
